@@ -1,0 +1,5 @@
+argon2 (0~20151206-1) UNRELEASED; urgency=medium
+
+  * Initial release. (Closes: #XXXXXX)
+
+ -- Luca Bruno <lucab@debian.org>  Fri, 08 Jan 2016 22:34:17 +0100

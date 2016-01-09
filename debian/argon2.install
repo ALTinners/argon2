@@ -1,0 +1,2 @@
+#!/usr/bin/dh-exec
+argon2 usr/bin

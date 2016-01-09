@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+include /usr/share/dpkg/default.mk
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+export SOVER=0
+export SONAME=libargon2.so.$(SOVER)
+export SOPKG=libargon2-$(SOVER)
+
+%:
+	dh $@
+
+override_dh_install:
+	dh_install
+	sed -i s/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/ debian/${SOPKG}-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libargon2.pc
+	sed -i s/@DEB_VERSION_UPSTREAM@/$(DEB_VERSION_UPSTREAM)/ debian/${SOPKG}-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libargon2.pc
+
+override_dh_auto_test:
+	-$(MAKE) -j1 test
