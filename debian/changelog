@@ -1,5 +1,6 @@
-argon2 (0~20151206-1) UNRELEASED; urgency=medium
+argon2 (0~20151206-0~exp1) experimental; urgency=medium
 
-  * Initial release. (Closes: #XXXXXX)
+  * Initial release (Closes: #810602)
+    + library interface not stable yet, targeting experimental
 
  -- Luca Bruno <lucab@debian.org>  Fri, 08 Jan 2016 22:34:17 +0100
