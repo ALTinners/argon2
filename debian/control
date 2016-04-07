@@ -3,7 +3,7 @@ Priority: optional
 Maintainer: Luca Bruno <lucab@debian.org>
 Build-Depends: debhelper (>= 9),
                dh-exec (>=0.3)
-Standards-Version: 3.9.6
+Standards-Version: 3.9.7
 Section: libs
 Homepage: https://github.com/P-H-C/phc-winner-argon2
 Vcs-Browser: https://anonscm.debian.org/gitweb/?p=collab-maint/argon.git
