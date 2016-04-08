@@ -1,3 +1,9 @@
+argon2 (0~20160406-1) unstable; urgency=medium
+
+  * First upload to unstable
+
+ -- Luca Bruno <lucab@debian.org>  Fri, 08 Apr 2016 23:47:47 +0200
+
 argon2 (0~20160406-0~exp1) experimental; urgency=medium
 
   * New upstream release
