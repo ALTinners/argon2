@@ -1,5 +1,17 @@
-argon2 (0~20151206-1) UNRELEASED; urgency=medium
+argon2 (0~20160406-0~exp1) experimental; urgency=medium
 
-  * Initial release. (Closes: #XXXXXX)
+  * New upstream release
+    + drop Makefile patch, applied upstream
+    + stable libargon2.so.0 interface, bump symbols
+  * Refreshed debian/control
+    + update Vcs-* endpoints
+    + bump policy version
+
+ -- Luca Bruno <lucab@debian.org>  Thu, 07 Apr 2016 23:40:58 +0200
+
+argon2 (0~20151206-0~exp1) experimental; urgency=medium
+
+  * Initial release (Closes: #810602)
+    + library interface not stable yet, targeting experimental
 
  -- Luca Bruno <lucab@debian.org>  Fri, 08 Jan 2016 22:34:17 +0100
