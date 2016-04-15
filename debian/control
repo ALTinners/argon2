@@ -53,6 +53,7 @@ Description: memory-hard hashing function - runtime library
  This package includes the dynamic library against which programs are linked.
 
 Package: argon2
+Section: utils
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Multi-Arch: foreign
