@@ -1,10 +1,14 @@
-argon2 (0~20160406-2) UNRELEASED; urgency=medium
+argon2 (0~20160406-2) unstable; urgency=medium
 
+  [ Daniel Kahn Gillmor ]
   * fix Vcs-* endpoints
   * add manpage for argon2 (Closes: #820491)
   * bump Standards-Version to 3.9.8 (no changes needed)
 
- -- Daniel Kahn Gillmor <dkg@fifthhorseman.net>  Fri, 08 Apr 2016 22:18:49 -0300
+  [ Luca Bruno ]
+  * argon2: fix section for utils package
+
+ -- Luca Bruno <lucab@debian.org>  Sat, 16 Apr 2016 09:37:28 +0200
 
 argon2 (0~20160406-1) unstable; urgency=medium
 
