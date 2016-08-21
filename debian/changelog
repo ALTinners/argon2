@@ -1,3 +1,10 @@
+argon2 (0~20160406-3) unstable; urgency=high
+
+  * debian/rules: explicit target for optimizations
+    (Closes: #828779)
+
+ -- Luca Bruno <lucab@debian.org>  Sun, 21 Aug 2016 09:03:33 +0000
+
 argon2 (0~20160406-2) unstable; urgency=medium
 
   [ Daniel Kahn Gillmor ]
