@@ -48,9 +48,9 @@ results.
 
 `argon2` is a command-line utility to test specific Argon2 instances
 on your system. To show usage instructions, run
-`./argon2` without arguments as
+`./argon2 -h` as
 ```
-Usage:  ./argon2 salt [-d] [-t iterations] [-m memory] [-p parallelism] [-h hash length] [-e|-r]
+Usage:  ./argon2 [-h] salt [-d] [-t iterations] [-m memory] [-p parallelism] [-l hash length] [-e|-r]
         Password is read from stdin
 Parameters:
         salt            The salt to use, at least 8 characters 
@@ -58,15 +58,16 @@ Parameters:
         -t N            Sets the number of iterations to N (default = 3)
         -m N            Sets the memory usage of 2^N KiB (default 12)
         -p N            Sets parallelism to N threads (default 1)
-        -h N            Sets hash output length to N bytes (default 32)
+        -l N            Sets hash output length to N bytes (default 32)
         -e              Output only encoded hash
         -r              Output only the raw bytes of the hash
+        -h              Print argon2 usage
 ```
 For example, to hash "password" using "somesalt" as a salt and doing 2
 iterations, consuming 64 MiB, using four parallel threads and an output hash
 of 24 bytes
 ```
-$ echo -n "password" | ./argon2 somesalt -t 2 -m 16 -p 4 -h 24
+$ echo -n "password" | ./argon2 somesalt -t 2 -m 16 -p 4 -l 24
 Type:           Argon2i
 Iterations:     2
 Memory:         65536 KiB
@@ -125,28 +126,36 @@ int main(void)
     argon2i_hash_raw(t_cost, m_cost, parallelism, pwd, pwdlen, salt, SALTLEN, hash1, HASHLEN);
 
     // low-level API
-    uint32_t lanes = parallelism;
-    uint32_t threads = parallelism;
     argon2_context context = {
-        hash2, HASHLEN,
-        pwd, pwdlen,
-        salt, SALTLEN,
-        NULL, 0, /* secret data */
-        NULL, 0, /* associated data */
+        hash2,  /* output array, at least HASHLEN in size */
+        HASHLEN, /* digest length */
+        pwd, /* password array */
+        pwdlen, /* password length */
+        salt,  /* salt array */
+        SALTLEN, /* salt length */
+        NULL, 0, /* optional secret data */
+        NULL, 0, /* optional associated data */
         t_cost, m_cost, parallelism, parallelism,
+        ARGON2_VERSION_13, /* algorithm version */
         NULL, NULL, /* custom memory allocation / deallocation functions */
         ARGON2_DEFAULT_FLAGS /* by default the password is zeroed on exit */
     };
-    argon2i( &context );
+
+    int rc = argon2i_ctx( &context );
+    if(ARGON2_OK != rc) {
+        printf("Error: %s\n", argon2_error_message(rc));
+        exit(1);
+    }
     free(pwd);
 
     for( int i=0; i<HASHLEN; ++i ) printf( "%02x", hash1[i] ); printf( "\n" );
     if (memcmp(hash1, hash2, HASHLEN)) {
-        for( int i=0; i<HASHLEN; ++i ) printf( "%02x", hash2[i] ); printf( "\n" );
-        printf("fail\n");
+        for( int i=0; i<HASHLEN; ++i ) {
+            printf( "%02x", hash2[i] );
+        }
+        printf("\nfail\n");
     }
     else printf("ok\n");
-
     return 0;
 }
 ```
@@ -203,15 +212,18 @@ their documentation):
 
 * [Go](https://github.com/tvdburgt/go-argon2) by [@tvdburgt](https://github.com/tvdburgt)
 * [Haskell](https://hackage.haskell.org/package/argon2-1.0.0/docs/Crypto-Argon2.html) by [@ocharles](https://github.com/ocharles)
-* [JavaScript](https://github.com/ranisalt/node-argon2), by [@ranisalt](https://github.com/ranisalt)
-* [JavaScript](https://github.com/cjlarose/argon2-ffi), by [@cjlarose](https://github.com/cjlarose)
+* [JavaScript (native)](https://github.com/ranisalt/node-argon2), by [@ranisalt](https://github.com/ranisalt)
+* [JavaScript (ffi)](https://github.com/cjlarose/argon2-ffi), by [@cjlarose](https://github.com/cjlarose)
 * [JVM](https://github.com/phxql/argon2-jvm) by [@phXql](https://github.com/phxql)
-* [Lua](https://github.com/thibaultCha/lua-argon2) by [@thibaultCha](https://github.com/thibaultCha)
+* [Lua (native)](https://github.com/thibaultCha/lua-argon2) by [@thibaultCha](https://github.com/thibaultCha)
+* [Lua (ffi)](https://github.com/thibaultCha/lua-argon2-ffi) by [@thibaultCha](https://github.com/thibaultCha)
 * [OCaml](https://github.com/Khady/ocaml-argon2) by [@Khady](https://github.com/Khady)
-* [Python](https://pypi.python.org/pypi/argon2), by [@flamewow](https://github.com/flamewow)
-* [Python](https://pypi.python.org/pypi/argon2_cffi), by [@hynek](https://github.com/hynek)
+* [Python (native)](https://pypi.python.org/pypi/argon2), by [@flamewow](https://github.com/flamewow)
+* [Python (ffi)](https://pypi.python.org/pypi/argon2_cffi), by [@hynek](https://github.com/hynek)
 * [Ruby](https://github.com/technion/ruby-argon2) by [@technion](https://github.com/technion)
 * [Rust](https://github.com/quininer/argon2-rs) by [@quininer](https://github.com/quininer)
+* [C#/.NET CoreCLR](https://github.com/kmaragon/Konscious.Security.Cryptography) by [@kmaragon](https://github.com/kmaragon)
+
 
 ## Test Suite
 
