@@ -1,3 +1,10 @@
+argon2 (0~20160821-1) unstable; urgency=medium
+
+  * New upstream release
+    + drop all patches applied upstream
+
+ -- Luca Bruno <lucab@debian.org>  Tue, 30 Aug 2016 15:25:45 +0000
+
 argon2 (0~20160406-3) unstable; urgency=high
 
   * debian/rules: explicit target for optimizations
