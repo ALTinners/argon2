@@ -23,13 +23,16 @@ CFLAGS += -std=c89 -pthread -O3 -Wall -g -Iinclude -Isrc
 CI_CFLAGS := $(CFLAGS) -Werror=declaration-after-statement -D_FORTIFY_SOURCE=2 \
 				-Wextra -Wno-type-limits -Werror -coverage -DTEST_LARGE_RAM
 
-OPTTEST := $(shell $(CC) -Iinclude -Isrc -march=native src/opt.c -c \
+OPTTARGET ?= native
+OPTTEST := $(shell $(CC) -Iinclude -Isrc -march=$(OPTTARGET) src/opt.c -c \
 			-o /dev/null 2>/dev/null; echo $$?)
 # Detect compatible platform
 ifneq ($(OPTTEST), 0)
+$(info Building without optimizations)
 	SRC += src/ref.c
 else
-	CFLAGS += -march=native
+$(info Building with optimizations for $(OPTTARGET))
+	CFLAGS += -march=$(OPTTARGET)
 	SRC += src/opt.c
 endif
 
@@ -42,7 +45,7 @@ ifeq ($(KERNEL_NAME), Linux)
 	LIB_CFLAGS := -shared -fPIC -fvisibility=hidden -DA2_VISCTL=1
 	SO_LDFLAGS := -Wl,-soname,libargon2.so.0
 endif
-ifeq ($(KERNEL_NAME), NetBSD)
+ifeq ($(KERNEL_NAME), $(filter $(KERNEL_NAME),FreeBSD NetBSD OpenBSD))
 	LIB_EXT := so
 	LIB_CFLAGS := -shared -fPIC
 endif
@@ -54,7 +57,13 @@ ifeq ($(findstring MINGW, $(KERNEL_NAME)), MINGW)
 	LIB_EXT := dll
 	LIB_CFLAGS := -shared -Wl,--out-implib,lib$(LIB_NAME).$(LIB_EXT).a
 endif
-ifeq ($(KERNEL_NAME), $(filter $(KERNEL_NAME),OpenBSD FreeBSD))
+ifeq ($(findstring MSYS, $(KERNEL_NAME)), MSYS)
+	LIB_EXT := dll
+	LIB_CFLAGS := -shared -Wl,--out-implib,lib$(LIB_NAME).$(LIB_EXT).a
+endif
+ifeq ($(KERNEL_NAME), SunOS)
+	CC := gcc
+	CFLAGS += -D_REENTRANT
 	LIB_EXT := so
 	LIB_CFLAGS := -shared -fPIC
 endif
