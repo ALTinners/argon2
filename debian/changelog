@@ -1,3 +1,14 @@
+argon2 (0~20161029-1) unstable; urgency=medium
+
+  [ Luca Bruno ]
+  * New upstream version 0~20161029
+
+  [ Tyler Hicks ]
+  * debian/copyright: argon2 is now dual-licensed
+  * debian/libargon2-0.symbols: Add new symbols for argon2id support
+
+ -- Luca Bruno <lucab@debian.org>  Sun, 16 Jul 2017 10:38:31 +0000
+
 argon2 (0~20160821-1) unstable; urgency=medium
 
   * New upstream release
