@@ -9,10 +9,12 @@ include /usr/share/dpkg/architecture.mk
 include /usr/share/dpkg/buildflags.mk
 include /usr/share/dpkg/default.mk
 
-export SOVER=0
+export OPTTARGET=$(DEB_TARGET_GNU_CPU)
 export SONAME=libargon2.so.$(SOVER)
 export SOPKG=libargon2-$(SOVER)
-export OPTTARGET=$(DEB_TARGET_GNU_CPU)
+export SOVER=0
+export DEBPREFIX=0~
+export UPSTREAMVER=$(subst $(DEBPREFIX),,$(DEB_VERSION_UPSTREAM))
 
 %:
 	dh $@
@@ -21,7 +23,7 @@ override_dh_install:
 	dh_install
 	sed -i '/^## /d' debian/${SOPKG}-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libargon2.pc
 	sed -i s/@HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/ debian/${SOPKG}-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libargon2.pc
-	sed -i s/@UPSTREAM_VER@/$(DEB_VERSION_UPSTREAM)/ debian/${SOPKG}-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libargon2.pc
+	sed -i s/@UPSTREAM_VER@/$(UPSTREAMVER)/ debian/${SOPKG}-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libargon2.pc
 
 override_dh_auto_test:
 	-$(MAKE) -j1 test
