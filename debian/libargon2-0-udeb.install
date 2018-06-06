@@ -1,2 +1,2 @@
 #!/usr/bin/dh-exec
-libargon2.so => usr/lib/${DEB_HOST_MULTIARCH}/${SONAME}
+libargon2.so.1 => usr/lib/${DEB_HOST_MULTIARCH}/${SONAME}
