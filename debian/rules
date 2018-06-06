@@ -9,10 +9,11 @@ include /usr/share/dpkg/architecture.mk
 include /usr/share/dpkg/buildflags.mk
 include /usr/share/dpkg/default.mk
 
+export PKG=libargon2
 export OPTTARGET=$(DEB_TARGET_GNU_CPU)
-export SONAME=libargon2.so.$(SOVER)
-export SOPKG=libargon2-$(SOVER)
-export SOVER=0
+export SONAME=$(PKG).so.$(SOVER)
+export SOPKG=$(PKG)-$(SOVER)
+export SOVER=1
 export DEBPREFIX=0~
 export UPSTREAMVER=$(subst $(DEBPREFIX),,$(DEB_VERSION_UPSTREAM))
 
@@ -21,12 +22,12 @@ export UPSTREAMVER=$(subst $(DEBPREFIX),,$(DEB_VERSION_UPSTREAM))
 
 override_dh_install:
 	dh_install
-	sed -i '/^## /d' debian/${SOPKG}-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libargon2.pc
-	sed -i s/@HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/ debian/${SOPKG}-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libargon2.pc
-	sed -i s/@UPSTREAM_VER@/$(UPSTREAMVER)/ debian/${SOPKG}-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libargon2.pc
+	sed -i '/^## /d' debian/${PKG}-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libargon2.pc
+	sed -i s/@HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/ debian/${PKG}-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libargon2.pc
+	sed -i s/@UPSTREAM_VER@/$(UPSTREAMVER)/ debian/${PKG}-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libargon2.pc
 
 override_dh_auto_test:
 	-$(MAKE) -j1 test
 
 override_dh_makeshlibs:
-	dh_makeshlibs -V --add-udeb="libargon2-0-udeb"
+	dh_makeshlibs -V --add-udeb="libargon2-1-udeb"
