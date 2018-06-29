@@ -36,7 +36,7 @@ Description: memory-hard hashing function - development files
 
 Package: libargon2-0
 Section: libdevel
-Architecture: all
+Architecture: any
 Depends: libargon2-1 (= ${binary:Version})
 Description: memory-hard hashing function - runtime library
  Argon2 is a password-hashing function that can be used to hash passwords
