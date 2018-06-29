@@ -1,3 +1,11 @@
+argon2 (0~20171227-1) unstable; urgency=medium
+
+  * New upstream release
+  * ABI bump.
+  * Build udeb without a dependency on pthreads.
+
+ -- Matthew Garrett <mjg59@google.com>  Wed, 06 Jun 2018 13:08:10 -0700
+
 argon2 (0~20161029-2) unstable; urgency=medium
 
   * control: move vcs to salsa gitlab
