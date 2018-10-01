@@ -1,4 +1,4 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: phc-winner-argon2
 Source: https://github.com/P-H-C/phc-winner-argon2
 Upstream-Contact: https://github.com/P-H-C/phc-winner-argon2/issues
